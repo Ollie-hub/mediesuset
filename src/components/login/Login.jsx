@@ -3,16 +3,19 @@ import { useForm } from "react-hook-form"
 
 export function Login() {
 
-    const { register, handleSubmit, errors } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
+    const onSubmit = (data, e) => console.log(data)
 
     return (
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <b>Login</b>
+            <p>Udfyld login oplysninger:</p>
             <label>Email</label>
-            <input name="email" type="email" ref={register({ required: true })}></input>
-
+            <input type="email" {...register('email', { required: true })}></input>
+            {errors.email && <span>Udfyld email</span>}
             <label>Password</label>
-            <input name="password" type="password" ref={register({ required: true })}></input>
-
+            <input type="password" {...register('password', { required: true })}></input>
+            {errors.password && <span>Udfyld password</span>}
             <button>LOGIN</button>
         </form>
     )
